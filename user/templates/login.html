@@ -1,10 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-
-</body>
-</html>
+{% extends "base.html" %}
+{% block contents %}
+    <div class="row mt-5">
+        <div class="col-12 text-center">
+            <h1>회원가입</h1>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-12">
+            {{ error }}
+        </div>
+    </div>
+    <div class="row mt-5">
+        <div class="col-12">
+            <form method="POST" action=".">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="mb-3">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        <input type="{{ field.field.widget.input_type }}" class="form-control"
+                               id="{{ field.id_for_label }}"
+                               placeholder="{{ field.label }}"
+                               name="{{ field.name }}"
+                        />
+                    </div>
+                    {% if field.errors %}
+                        <div style="color:red">{{ field.errors }}</div>
+                    {% endif %}
+                {% endfor %}
+                <div class="d-grid mt-3">
+                    <button class="btn btn-lg btn-primary" type="submit">회원수정</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
