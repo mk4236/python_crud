@@ -1,7 +1,7 @@
 from django.contrib.auth.hashers import make_password
 from django.shortcuts import render, redirect
 
-from user.forms import LoginForm
+from user.forms import LoginForm, UpdateForm
 from user.models import User
 
 
@@ -48,6 +48,37 @@ def create(request):
             # 성공하더라도 아직 다른 페이지가 없는 관계로 create 페이지로 돌아간다.
             # admin 페이지에서 user가 생성되었는지 확인한다.
             return render(request, 'create.html', res_data)
+
+
+def update(request):
+    user_id = request.session.get('user_id')
+
+    if not user_id:
+        return redirect("/user/login/")
+    else:
+        try:
+            user = User.objects.get(id=user_id)
+        except User.DoesNotExist:
+            return redirect("/user/logout/")
+
+    if request.method == 'GET':
+        form = UpdateForm(initial={
+            'user_name': user.user_name,
+            'user_email': user.user_email,
+            'password': '',
+            're_password': ''
+        })
+        return render(request, 'update.html', {'form': form})
+    elif request.method == 'POST':
+        form = UpdateForm(request.POST)
+        if form.is_valid():
+            user.user_name = form.data.get('user_name')
+            user.user_email = form.data.get('user_email')
+            user.password = form.data.get('password')
+            user.save()
+            return redirect("/user/detail/")
+        else:
+            return render(request, 'update.html', {'form': form})
 
 
 def login(request):

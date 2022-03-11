@@ -42,3 +42,40 @@ class LoginForm(forms.Form):
                 self.add_error('password', '비밀번호를 확인해주세요')
             else:
                 self.user_id = user.id
+
+
+class UpdateForm(forms.Form):
+    user_name = forms.CharField(
+        max_length=64,
+        label="사용자 명",
+        error_messages={"required": "사용자 명을 입력해주세요"}
+    )
+    user_email = forms.EmailField(
+        max_length=256,
+        label="이메일",
+        error_messages={"required": "이메일을 입력해주세요"}
+    )
+    password = forms.CharField(
+        widget=forms.PasswordInput,
+        min_length=8,
+        max_length=16,
+        label="비밀번호",
+        error_messages={"required": "비밀번호를 입력해주세요"}
+    )
+    re_password = forms.CharField(
+        widget=forms.PasswordInput,
+        min_length=8,
+        max_length=16,
+        label="비밀번호 확인",
+        error_messages={"required": "비밀번호 확인을 입력해주세요"}
+    )
+
+    def clean(self):
+        clean_data = super().clean()
+        password = clean_data.get('password')
+        re_password = clean_data.get('re_password')
+
+        if password != re_password:
+            self.add_error('password', '비밀번호를 확인해주세요')
+            self.add_error('re_password', '비밀번호를 확인해주세요')
+            return
