@@ -72,9 +72,9 @@ def update(request):
     elif request.method == 'POST':
         form = UpdateForm(request.POST)
         if form.is_valid():
-            user.user_name = form.data.get('user_name')
-            user.user_email = form.data.get('user_email')
-            user.password = form.data.get('password')
+            user.user_name = form.cleaned_data.get('user_name')
+            user.user_email = form.cleaned_data.get('user_email')
+            user.password = form.cleaned_data.get('password')
             user.save()
             return redirect("/user/detail/")
         else:

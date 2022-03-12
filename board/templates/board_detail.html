@@ -13,4 +13,8 @@
         <h2>내용</h2>
         <p>{{ board.contents }}</p>
     </div>
+    <div class="row mt-5 gap-2">
+        <a href="/board/update/{{ board.id }}/" class="btn btn-lg btn-primary">수정하기</a>
+        <a href="/board/list/" class="btn btn-lg btn-outline-primary">목록으로</a>
+    </div>
 {% endblock %}

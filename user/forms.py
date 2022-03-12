@@ -5,7 +5,7 @@ from django.forms.utils import ErrorList
 from user.models import User
 
 
-class LoginForm(forms.Form):
+class LoginForm(forms.ModelForm):
     user_email = forms.EmailField(
         max_length=256,
         label="이메일",
@@ -18,6 +18,10 @@ class LoginForm(forms.Form):
         label="비밀번호",
         error_messages={"required": "비밀번호를 입력해주세요"}
     )
+
+    class Meta:
+        model = User
+        fields = ['user_email', 'password']
 
     def __init__(self, data=None, files=None, auto_id='id_%s', prefix=None,
                  initial=None, error_class=ErrorList, label_suffix=None,
@@ -44,7 +48,7 @@ class LoginForm(forms.Form):
                 self.user_id = user.id
 
 
-class UpdateForm(forms.Form):
+class UpdateForm(forms.ModelForm):
     user_name = forms.CharField(
         max_length=64,
         label="사용자 명",
@@ -69,6 +73,10 @@ class UpdateForm(forms.Form):
         label="비밀번호 확인",
         error_messages={"required": "비밀번호 확인을 입력해주세요"}
     )
+
+    class Meta:
+        model = User
+        fields = ['user_name', 'user_email', 'password']
 
     def clean(self):
         clean_data = super().clean()
