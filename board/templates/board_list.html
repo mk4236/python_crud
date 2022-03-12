@@ -40,11 +40,22 @@
                             <a class="page-link" href="javascript:return false">&laquo;</a>
                         </li>
                     {% endif %}
-                    <li class="page-item active">
-                        <a class="page-link" href="javascript:return false">
-                            {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
-                        </a>
-                    </li>
+                    {% for page_no in page_list %}
+                        {% ifequal page_no page_obj.number %}
+                            <li class="page-item active">
+                                <a class="page-link" href="javascript:return false">
+                                    {{ page_no }}
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="page-item">
+                                <a class="page-link" href="?p={{ page_no }}">
+                                    {{ page_no }}
+                                </a>
+                            </li>
+                        {% endifequal %}
+                        {{ page }}
+                    {% endfor %}
                     {% if page_obj.has_next %}
                         <li class="page-item">
                             <a class="page-link" href="?p={{ page_obj.next_page_number }}">&raquo;</a>

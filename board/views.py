@@ -42,6 +42,16 @@ class BoardListView(ListView):
     template_name = "board_list.html"
     context_object_name = "board_list"
     ordering = "-id"
-    paginate_by = 5
+    paginate_by = 1
     paginate_orphans = 1
     page_kwarg = "p"
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(BoardListView, self).get_context_data()
+        # pagination
+        page = context['page_obj']
+        paginator = page.paginator
+        page_list = paginator.get_elided_page_range(page.number, on_each_side=1, on_ends=2)
+        context['page_list'] = page_list
+
+        return context
