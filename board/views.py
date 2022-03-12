@@ -51,7 +51,7 @@ class BoardListView(ListView):
         # pagination
         page = context['page_obj']
         paginator = page.paginator
-        page_list = paginator.get_elided_page_range(page.number, on_each_side=1, on_ends=2)
+        page_list = paginator.get_elided_page_range(page.number, on_each_side=3, on_ends=0)
         context['page_list'] = page_list
 
         return context
