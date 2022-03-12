@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block contents %}
+    <div class="row mt-5">
+        <div class="col-12 text-center">
+            <h1>상세보기</h1>
+        </div>
+    </div>
+    <div class="row mt-5">
+        <h2>제목</h2>
+        <p>{{ board.title }}</p>
+    </div>
+    <div class="row mt-5">
+        <h2>내용</h2>
+        <p>{{ board.contents }}</p>
+    </div>
+{% endblock %}
