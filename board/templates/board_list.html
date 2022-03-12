@@ -41,19 +41,19 @@
                         </li>
                     {% endif %}
                     {% for page_no in page_list %}
-                        {% ifequal page_no page_obj.number %}
+                        {% if page_no == page_obj.number %}
                             <li class="page-item active">
                                 <a class="page-link" href="javascript:return false">
                                     {{ page_no }}
                                 </a>
                             </li>
-                        {% else %}
+                        {% elif page_no != '…' %}
                             <li class="page-item">
                                 <a class="page-link" href="?p={{ page_no }}">
                                     {{ page_no }}
                                 </a>
                             </li>
-                        {% endifequal %}
+                        {% endif %}
                         {{ page }}
                     {% endfor %}
                     {% if page_obj.has_next %}
